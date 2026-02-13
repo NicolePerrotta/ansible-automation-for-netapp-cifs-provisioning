@@ -1,4 +1,4 @@
-# Ansible Automation for NetApp CIFS Provisioning
+# Ansible automation for NetApp CIFS provisioning
 This Ansible playbook deploys a complete NetApp SVM (Storage Virtual Machine) and CIFS configuration using a modular, role‑based architecture. It leverages the `netapp.ontap` collection and various modules to manage ONTAP resources efficiently. The structure of the playbook, along with the use of roles and variable files, ensure scalability, maintainability, and consistent parameter management across clusters, network interfaces, DNS, volumes, and CIFS shares.
 
 ## Directory Structure
@@ -6,7 +6,6 @@ This Ansible playbook deploys a complete NetApp SVM (Storage Virtual Machine) an
 The playbook is organized into the following directories and files:
 
 ```
-.
 ├── main.yaml
 ├── roles
 │   ├── create_cifs
