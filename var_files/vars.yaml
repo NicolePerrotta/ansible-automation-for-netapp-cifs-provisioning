@@ -1,0 +1,33 @@
+svm:
+  name: svm1
+
+interface:
+  interface_name: "data_interface_1"
+  address: "192.168.0.10"
+  netmask: "255.255.255.0"
+  home_node: "cluster1-01"
+  home_port: "e0e"
+  ipspace: "Default"
+
+net_routes: 
+  destination: "0.0.0.0/0"
+  gateway: 192.168.0.1 
+
+dns: 
+  nameservers: 192.168.0.253
+  domain: "demo.netapp.com"
+
+volume:
+    name: volume1
+    aggregate_name: cluster1_01_SSD_1
+    size: 1
+    size_unit: gb
+
+cifs_server: 
+  name: "SVM_CIFS"
+  ou: "CN=Computers,DC=demo,DC=netapp,DC=com"
+  domain: "demo.netapp.com"
+
+cifs: 
+  name: "share_cifs"
+  path: "/vol_cifs"
