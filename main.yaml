@@ -1,0 +1,77 @@
+---
+- name: Create an SVM with a CIFS share
+  hosts: localhost
+  gather_facts: false
+  collections:
+    - netapp.ontap
+
+  vars_files:
+    - var_files/vars.yaml
+    - var_files/clusters.yaml
+
+  tasks:
+    - name: Create an SVM
+      include_role:
+        name: create_svm
+      vars:
+        cluster_hostname: "{{ clusters[0].cluster_hostname }}"
+        cluster_username: "{{ clusters[0].cluster_username }}"
+        cluster_password: "{{ clusters[0].cluster_password }}"
+    - name: Debug SVM creation
+      debug:
+        msg: "Creating SVM {{ svm.name }}"
+
+    - name: Create interfaces
+      include_role:
+        name: create_interfaces
+      vars:
+        cluster_hostname: "{{ clusters[0].cluster_hostname }}"
+        cluster_username: "{{ clusters[0].cluster_username }}"
+        cluster_password: "{{ clusters[0].cluster_password }}"
+    - name: Debug interfaces creation
+      debug:
+        msg: "Creating interfaces on SVM {{ svm.name }}"
+
+    - name: Set route for SVM
+      include_role:
+        name: set_route
+      vars:
+        cluster_hostname: "{{ clusters[0].cluster_hostname }}"
+        cluster_username: "{{ clusters[0].cluster_username }}"
+        cluster_password: "{{ clusters[0].cluster_password }}"
+    - name: Debug route setting
+      debug:
+        msg: "Setting route for SVM {{ svm.name }}"
+
+    - name: Create DNS server
+      include_role:
+        name: create_dns_server
+      vars:
+        cluster_hostname: "{{ clusters[0].cluster_hostname }}"
+        cluster_username: "{{ clusters[0].cluster_username }}"
+        cluster_password: "{{ clusters[0].cluster_password }}"
+    - name: Debug DNS server creation
+      debug:
+        msg: "Creating DNS server on SVM {{ svm.name }}"
+
+    - name: Create a volume
+      include_role:
+        name: create_volume
+      vars:
+        cluster_hostname: "{{ clusters[0].cluster_hostname }}"
+        cluster_username: "{{ clusters[0].cluster_username }}"
+        cluster_password: "{{ clusters[0].cluster_password }}"
+    - name: Debug volume creation
+      debug:
+        msg: "Creating volume {{ volume.name }} on SVM {{ svm.name }}"
+
+    - name: Create a CIFS share
+      include_role:
+        name: create_cifs
+      vars:
+        cluster_hostname: "{{ clusters[0].cluster_hostname }}"
+        cluster_username: "{{ clusters[0].cluster_username }}"
+        cluster_password: "{{ clusters[0].cluster_password }}"
+    - name: Debug CIFS share creation
+      debug:
+        msg: "Creating CIFS share on SVM {{ svm.name }}"
