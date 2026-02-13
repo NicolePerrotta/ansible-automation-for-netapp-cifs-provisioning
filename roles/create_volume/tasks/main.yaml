@@ -1,0 +1,20 @@
+- name: set auth
+  set_fact:
+    auth: &auth
+      hostname: "{{ cluster_hostname }}"
+      username: "{{ cluster_username }}"
+      password: "{{ cluster_password }}"
+      https: true
+      validate_certs: false
+
+- name: create volume
+  na_ontap_volume:
+    name:      "{{ volume.name }}"
+    aggregate_name: "{{ volume.aggregate_name }}"
+    size: "{{ volume.size }}"
+    size_unit: "{{ volume.size_unit | default('gb') }}"
+    vserver: "{{ svm.name }}"
+    junction_path: "{{ cifs.path}}"
+    space_guarantee: "none"
+    volume_security_style: ntfs
+    <<: *auth    

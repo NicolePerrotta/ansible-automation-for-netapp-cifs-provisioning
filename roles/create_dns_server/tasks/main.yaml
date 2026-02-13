@@ -1,0 +1,16 @@
+- name: set auth
+  set_fact:
+    auth: &auth
+      hostname: "{{ cluster_hostname }}"
+      username: "{{ cluster_username }}"
+      password: "{{ cluster_password }}"
+      https: true
+      validate_certs: false
+
+- name: Add DNS server
+  na_ontap_dns:
+    state: present
+    vserver: "{{ svm.name }}"
+    domains: "{{ dns.domain }}"
+    nameservers: "{{ dns.nameservers }}"
+    <<: *auth

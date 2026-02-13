@@ -1,0 +1,16 @@
+- name: set auth
+  set_fact:
+    auth: &auth
+      hostname: "{{ cluster_hostname }}"
+      username: "{{ cluster_username }}"
+      password: "{{ cluster_password }}"
+      https: true
+      validate_certs: false
+- name: create svm
+  na_ontap_svm:
+    name: "{{ svm.name }}"
+    state: present
+    services:
+      nfs:
+        enabled: true
+    <<: *auth

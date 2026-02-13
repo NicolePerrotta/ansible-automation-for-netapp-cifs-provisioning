@@ -1,0 +1,27 @@
+  - name: set auth
+    set_fact:
+      auth: &auth
+        hostname: "{{ cluster_hostname }}"
+        username: "{{ cluster_username }}"
+        password: "{{ cluster_password }}"
+        https: true
+        validate_certs: false
+
+  - name: Create cifs_server
+    na_ontap_cifs_server:
+      state: present
+      vserver: "{{ svm.name }}"
+      name: "{{ cifs_server.name }}"
+      admin_user_name: "{{ cluster_username }}"
+      admin_password: "{{ cluster_password }}"
+      ou: "{{ cifs_server.ou }}"
+      domain: "{{ cifs_server.domain }}"
+      <<: *auth
+
+  - name: Create CIFS Share
+    na_ontap_cifs:
+      state: present
+      vserver: "{{ svm.name }}"
+      name: "{{ cifs.name }}"
+      path: "{{ cifs.path }}"
+      <<: *auth
